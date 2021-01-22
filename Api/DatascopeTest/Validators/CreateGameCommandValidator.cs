@@ -1,4 +1,5 @@
-﻿using DatascopeTest.Commands;
+﻿using System;
+using DatascopeTest.Commands;
 using FluentValidation;
 
 namespace DatascopeTest.Validators
@@ -20,7 +21,8 @@ namespace DatascopeTest.Validators
                 .MaximumLength(500);
 
             RuleFor(x => x.ReleasedAt)
-                .NotNull();
+                .NotNull()
+                .LessThanOrEqualTo(DateTime.UtcNow);
 
             RuleFor(x => x.Rating)
                 .NotNull()

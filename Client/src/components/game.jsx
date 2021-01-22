@@ -22,7 +22,7 @@ class Game extends InputForm {
     id: Joi.number(),
     name: Joi.string().required().label("Name"),
     description: Joi.string().required().label("Description"),
-    releasedAt: Joi.date().required().label("Release Date"),
+    releasedAt: Joi.date().required().max(new Date()).label("Release Date"),
     rating: Joi.number().required().max(10).min(0).label("Rating"),
   };
 
@@ -68,6 +68,7 @@ class Game extends InputForm {
         toast.error(
           "Looks like I missed some validation on the client side, awkward..."
         );
+        return;
       }
 
       toast.error("Sorry something has gone wrong");
