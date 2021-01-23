@@ -18,22 +18,23 @@ function Games() {
     pageSize: 5,
   });
 
-  const loadGames = async (page, pageSize) => {
-    const response = await GamesService.getPaged(page, pageSize);
-    const data = response.data;
-    setGames(data);
-
-    setPagination(JSON.parse(response.headers["x-pagination"]));
-  };
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
-    loadGames(pagination.page, pagination.pageSize);
-  }, []);
+    const loadGames = async () => {
+      const response = await GamesService.getPaged(page, pageSize);
+      const data = response.data;
+      setPagination(JSON.parse(response.headers["x-pagination"]));
+      setGames(data);
+    };
+
+    loadGames();
+  }, [page, pageSize]);
 
   const handleDelete = async (game) => {
     const previousState = games;
-    const games = games.filter((m) => m.id !== game.id);
-    setGames(games);
+    setGames(games.filter((m) => m.id !== game.id));
 
     try {
       await GamesService.remove(game.id);
@@ -47,26 +48,13 @@ function Games() {
       toast("Looks like that game had already been deleted....");
     }
 
-    const page =
-      games.length <= 1 && pagination.page > 1
-        ? pagination.page - 1
-        : pagination.page;
-
-    loadGames(page, pagination.pageSize);
+    if (games.length <= 1 && pagination.page > 1) {
+      setPage(page - 1);
+    }
   };
 
   const handleEdit = (game) => {
     return history.push(`/game/${game.id}`);
-  };
-
-  const handlePageChange = async (page) => {
-    setPagination({ page: page, ...pagination });
-    await loadGames(page, pagination.pageSize);
-  };
-
-  const handlePageSizeChange = async ({ currentTarget: input }) => {
-    setPagination({ pageSize: input.value, ...pagination });
-    await loadGames(pagination.page, input.value);
   };
 
   if (!games || games.length < 1) {
@@ -126,7 +114,7 @@ function Games() {
         <div className="col-md-3">
           <PaginationComponent
             pagination={pagination}
-            onPageChange={handlePageChange}
+            onPageChange={(page) => setPage(page)}
           />
         </div>
         <div className="offset-md-6">
@@ -136,7 +124,10 @@ function Games() {
                 <Form.Label>page size</Form.Label>
               </Col>
               <Col>
-                <Form.Control as="select" onChange={handlePageSizeChange}>
+                <Form.Control
+                  as="select"
+                  onChange={(e) => setPageSize(e.currentTarget.value)}
+                >
                   <option>5</option>
                   <option>10</option>
                   <option>25</option>

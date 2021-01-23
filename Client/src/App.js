@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Games from "./components/games";
