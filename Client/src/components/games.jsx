@@ -23,9 +23,7 @@ function Games() {
     const data = response.data;
     setGames(data);
 
-    const paginatioon = response.headers["x-pagination"];
-    const json = JSON.parse(paginatioon);
-    setPagination(json);
+    setPagination(JSON.parse(response.headers["x-pagination"]));
   };
 
   useEffect(() => {
@@ -33,26 +31,26 @@ function Games() {
   }, []);
 
   const handleDelete = async (game) => {
-    const state = games;
-    const newGames = games.filter((m) => m.id !== game.id);
-    setGames(newGames);
+    const previousState = games;
+    const games = games.filter((m) => m.id !== game.id);
+    setGames(games);
 
     try {
       await GamesService.remove(game.id);
     } catch (ex) {
       if (!ex.response || ex.response.status !== 404) {
         toast.error("Sorry something has gone wrong");
-        setGames(state);
+        setGames(previousState);
         return;
       }
 
       toast("Looks like that game had already been deleted....");
     }
 
-    let page = pagination.page;
-    if (games.length <= 1 && pagination.page > 1) {
-      page--;
-    }
+    const page =
+      games.length <= 1 && pagination.page > 1
+        ? pagination.page - 1
+        : pagination.page;
 
     loadGames(page, pagination.pageSize);
   };

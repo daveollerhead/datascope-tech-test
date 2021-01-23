@@ -6,7 +6,7 @@ import GamesService from "../services/gamesService";
 import { toast } from "react-toastify";
 import Moment from "moment";
 
-class Game extends InputForm {
+class GameForm extends InputForm {
   state = {
     data: {
       name: "",
@@ -112,4 +112,4 @@ class Game extends InputForm {
   }
 }
 
-export default Game;
+export default GameForm;

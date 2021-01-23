@@ -2,32 +2,26 @@ import React from "react";
 import Pagination from "react-bootstrap/Pagination";
 import _ from "lodash";
 
-function PaginationComponent(props) {
-  let pagination = props.pagination;
+function PaginationComponent({ pagination, onPageChange }) {
   if (pagination.totalPages === 1) {
     return null;
   }
 
-  let active = pagination.page;
-  let items = [];
+  const range = 5 > pagination.totalPages ? pagination.totalPages : 5;
 
-  let paginationRange = 5;
-  if (paginationRange > pagination.totalPages) {
-    paginationRange = pagination.totalPages;
-  }
-
-  let start = pagination.page - Math.floor(paginationRange / 2);
+  let start = pagination.page - Math.floor(range / 2);
   start = Math.max(start, 1);
-  start = Math.min(start, 1 + pagination.totalPages - paginationRange);
+  start = Math.min(start, 1 + pagination.totalPages - range);
 
-  const pages = _.range(start, start + paginationRange);
+  const pages = _.range(start, start + range);
 
+  let items = [];
   pages.forEach((page) => {
     items.push(
       <Pagination.Item
         key={page}
-        active={page === active}
-        onClick={() => props.onPageChange(page)}
+        active={page === pagination.page}
+        onClick={() => onPageChange(page)}
       >
         {page}
       </Pagination.Item>
@@ -38,22 +32,22 @@ function PaginationComponent(props) {
     <Pagination>
       <Pagination.First
         disabled={!pagination.hasPreviousPage}
-        onClick={() => props.onPageChange(1)}
+        onClick={() => onPageChange(1)}
       />
       <Pagination.Prev
         disabled={!pagination.hasPreviousPage}
-        onClick={() => props.onPageChange(pagination.page - 1)}
+        onClick={() => onPageChange(pagination.page - 1)}
       />
-      {props.pages > paginationRange && <Pagination.Ellipsis />}
+      {pagination.totalPages > range && <Pagination.Ellipsis />}
       {items}
-      {props.pages > paginationRange && <Pagination.Ellipsis />}
+      {pagination.totalPages > range && <Pagination.Ellipsis />}
       <Pagination.Next
         disabled={!pagination.hasNextPage}
-        onClick={() => props.onPageChange(pagination.page + 1)}
+        onClick={() => onPageChange(pagination.page + 1)}
       />
       <Pagination.Last
         disabled={!pagination.hasNextPage}
-        onClick={() => props.onPageChange(pagination.totalPages)}
+        onClick={() => onPageChange(pagination.totalPages)}
       />
     </Pagination>
   );

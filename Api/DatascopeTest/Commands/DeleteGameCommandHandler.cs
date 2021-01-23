@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using DatascopeTest.Data;
 using DatascopeTest.Data.Repositories;
 using DatascopeTest.Exceptions;
 using DatascopeTest.Models;
