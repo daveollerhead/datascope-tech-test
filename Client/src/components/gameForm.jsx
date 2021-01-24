@@ -20,8 +20,8 @@ class GameForm extends InputForm {
 
   schema = {
     id: Joi.number(),
-    name: Joi.string().required().label("Name"),
-    description: Joi.string().required().label("Description"),
+    name: Joi.string().required().max(100).label("Name"),
+    description: Joi.string().required().max(500).label("Description"),
     releasedAt: Joi.date().required().max(new Date()).label("Release Date"),
     rating: Joi.number().required().max(10).min(0).label("Rating"),
   };

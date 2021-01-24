@@ -38,9 +38,9 @@ function PaginationComponent({ pagination, onPageChange }) {
         disabled={!pagination.hasPreviousPage}
         onClick={() => onPageChange(pagination.page - 1)}
       />
-      {pagination.totalPages > range && <Pagination.Ellipsis />}
+      {pagination.totalPages > range && <Pagination.Ellipsis disabled />}
       {items}
-      {pagination.totalPages > range && <Pagination.Ellipsis />}
+      {pagination.totalPages > range && <Pagination.Ellipsis disabled />}
       <Pagination.Next
         disabled={!pagination.hasNextPage}
         onClick={() => onPageChange(pagination.page + 1)}

@@ -13,10 +13,7 @@ import Col from "react-bootstrap/Col";
 function Games() {
   const history = useHistory({});
   const [games, setGames] = useState([]);
-  const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: 5,
-  });
+  const [pagination, setPagination] = useState({});
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -57,6 +54,15 @@ function Games() {
 
   const handleEdit = (game) => {
     return history.push(`/game/${game.id}`);
+  };
+
+  const handleSetPageSize = (newPageSize) => {
+    var newTotalPages = Math.ceil(pagination.totalCount / newPageSize);
+    if (newTotalPages < pagination.page) {
+      setPage(newTotalPages);
+    }
+
+    setPageSize(newPageSize);
   };
 
   if (!games || games.length < 1) {
@@ -128,7 +134,7 @@ function Games() {
               <Col>
                 <Form.Control
                   as="select"
-                  onChange={(e) => setPageSize(e.currentTarget.value)}
+                  onChange={(e) => handleSetPageSize(e.currentTarget.value)}
                 >
                   <option>5</option>
                   <option>10</option>
