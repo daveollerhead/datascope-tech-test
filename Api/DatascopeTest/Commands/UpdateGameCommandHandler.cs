@@ -4,18 +4,19 @@ using AutoMapper;
 using DatascopeTest.Data.Repositories;
 using DatascopeTest.Exceptions;
 using DatascopeTest.Models;
-using DatascopeTest.Validators;
+using FluentValidation;
 using MediatR;
+using ValidationException = DatascopeTest.Exceptions.ValidationException;
 
 namespace DatascopeTest.Commands
 {
     public class UpdateGameCommandHandler : IRequestHandler<UpdateGameCommand>
     {
         private readonly IGenericRepository<Game> _repository;
-        private readonly IUpdateGameCommandValidator _validator;
+        private readonly IValidator<UpdateGameCommand> _validator;
         private readonly IMapper _mapper;
 
-        public UpdateGameCommandHandler(IGenericRepository<Game> repository, IUpdateGameCommandValidator validator, IMapper mapper)
+        public UpdateGameCommandHandler(IGenericRepository<Game> repository, IValidator<UpdateGameCommand> validator, IMapper mapper)
         {
             _repository = repository;
             _validator = validator;

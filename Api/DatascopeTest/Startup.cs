@@ -10,7 +10,7 @@ using DatascopeTest.Data.Repositories;
 using DatascopeTest.Extensions;
 using DatascopeTest.Mappings;
 using DatascopeTest.Models;
-using DatascopeTest.Validators;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,8 +34,10 @@ namespace DatascopeTest
             services.AddScoped<IGenericRepository<Game>, GenericRepository<Game>>();
             services.AddScoped<IGamesRepository, GamesRepository>();
 
-            services.AddTransient<ICreateGameCommandValidator, CreateGameCommandValidator>();
-            services.AddTransient<IUpdateGameCommandValidator, UpdateGameCommandValidator>();
+            services.Scan(s => s.FromAssemblyOf<Startup>()
+                .AddClasses(c => c.AssignableTo(typeof(IValidator<>)))
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
 
             services.AddCors(opt =>
             {

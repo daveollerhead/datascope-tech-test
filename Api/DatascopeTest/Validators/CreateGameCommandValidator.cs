@@ -4,11 +4,7 @@ using FluentValidation;
 
 namespace DatascopeTest.Validators
 {
-    public interface ICreateGameCommandValidator : IValidator<CreateGameCommand>
-    {
-    }
-
-    public class CreateGameCommandValidator : AbstractValidator<CreateGameCommand>, ICreateGameCommandValidator
+    public class CreateGameCommandValidator : AbstractValidator<CreateGameCommand>, IValidator<CreateGameCommand> 
     {
         public CreateGameCommandValidator()
         {

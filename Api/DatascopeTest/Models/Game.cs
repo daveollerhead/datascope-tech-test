@@ -5,11 +5,11 @@ namespace DatascopeTest.Models
     public class Game : Entity
     {
         public int Id { get; private set; }
-        public string Name { get; }
-        public string Description { get; }
-        public DateTime ReleasedAt { get; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public DateTime ReleasedAt { get; private set; }
         public DateTime CreatedAt { get; }
-        public byte Rating { get; }
+        public byte Rating { get; private set; }
 
         public Game(string name, string description, DateTime releasedAt, byte rating)
         {

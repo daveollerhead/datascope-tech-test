@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatascopeTest.Data.Repositories;
 using DatascopeTest.DTOs;
-using DatascopeTest.Exceptions;
 using DatascopeTest.Models;
-using DatascopeTest.Validators;
+using FluentValidation;
 using MediatR;
+using ValidationException = DatascopeTest.Exceptions.ValidationException;
 
 namespace DatascopeTest.Commands
 {
     public class CreateGameCommandHandler : IRequestHandler<CreateGameCommand, GetGameDto>
     {
         private readonly IGenericRepository<Game> _repository;
-        private readonly ICreateGameCommandValidator _validator;
+        private readonly IValidator<CreateGameCommand> _validator;
         private readonly IMapper _mapper;
 
-        public CreateGameCommandHandler(IGenericRepository<Game> repository, ICreateGameCommandValidator validator, IMapper mapper)
+        public CreateGameCommandHandler(IGenericRepository<Game> repository, IValidator<CreateGameCommand> validator, IMapper mapper)
         {
             _repository = repository;
             _validator = validator;

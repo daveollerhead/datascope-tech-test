@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using DatascopeTest.Data;
 using DatascopeTest.Data.Repositories;
 using DatascopeTest.DTOs;
 using DatascopeTest.Helpers;
@@ -10,12 +9,12 @@ using MediatR;
 
 namespace DatascopeTest.Queries
 {
-    public class GetPagedGameQueryHandler : IRequestHandler<GetPagedGamesQuery, PagedList<GetGameDto>>
+    public class GetPagedGamesQueryHandler : IRequestHandler<GetPagedGamesQuery, PagedList<GetGameDto>>
     {
         private readonly IGamesRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetPagedGameQueryHandler(IGamesRepository repository, IMapper mapper)
+        public GetPagedGamesQueryHandler(IGamesRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

@@ -1,13 +1,10 @@
-﻿using DatascopeTest.Commands;
+﻿using System;
+using DatascopeTest.Commands;
 using FluentValidation;
 
 namespace DatascopeTest.Validators
 {
-    public interface IUpdateGameCommandValidator : IValidator<UpdateGameCommand>
-    {
-    }
-
-    public class UpdateGameCommandValidator : AbstractValidator<UpdateGameCommand>, IUpdateGameCommandValidator
+    public class UpdateGameCommandValidator : AbstractValidator<UpdateGameCommand>, IValidator<UpdateGameCommand>
     {
         public UpdateGameCommandValidator()
         {
@@ -20,9 +17,11 @@ namespace DatascopeTest.Validators
                 .MaximumLength(500);
 
             RuleFor(x => x.ReleasedAt)
-                .NotNull();
+                .NotNull()
+                .LessThanOrEqualTo(DateTime.UtcNow);
 
             RuleFor(x => x.Rating)
+                .NotNull()
                 .InclusiveBetween((byte)0, (byte)10);
         }
     }
