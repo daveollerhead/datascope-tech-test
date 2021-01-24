@@ -21,14 +21,14 @@ function Games() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
-  useEffect(() => {
-    const loadGames = async () => {
-      const response = await GamesService.getPaged(page, pageSize);
-      const data = response.data;
-      setPagination(JSON.parse(response.headers["x-pagination"]));
-      setGames(data);
-    };
+  const loadGames = async () => {
+    const response = await GamesService.getPaged(page, pageSize);
+    const data = response.data;
+    setPagination(JSON.parse(response.headers["x-pagination"]));
+    setGames(data);
+  };
 
+  useEffect(() => {
     loadGames();
   }, [page, pageSize]);
 
@@ -51,6 +51,8 @@ function Games() {
     if (games.length <= 1 && pagination.page > 1) {
       setPage(page - 1);
     }
+
+    loadGames();
   };
 
   const handleEdit = (game) => {
