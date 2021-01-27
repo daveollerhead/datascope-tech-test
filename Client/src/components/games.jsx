@@ -8,7 +8,7 @@ import Moment from "moment";
 import PaginationComponent from "./common/pagination";
 import Col from "react-bootstrap/Col";
 import useGames from "../hooks/useGames";
-import _ from "lodash";
+import Loader from "react-loader-spinner";
 
 function Games() {
   const history = useHistory({});
@@ -29,7 +29,15 @@ function Games() {
     return (
       <Fragment>
         <h2>Games Rating App</h2>
-        <p>Loading...</p>
+        <div className="text-center">
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000} //3 secs
+          />
+        </div>
       </Fragment>
     );
   }
@@ -103,6 +111,7 @@ function Games() {
               <Col>
                 <Form.Control
                   as="select"
+                  value={pagination.pageSize}
                   onChange={(e) => handleSetPageSize(e.currentTarget.value)}
                 >
                   <option>5</option>
