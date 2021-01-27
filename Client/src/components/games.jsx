@@ -1,69 +1,38 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
-import GamesService from "../services/gamesService";
-import { toast } from "react-toastify";
 import Moment from "moment";
 import PaginationComponent from "./common/pagination";
 import Col from "react-bootstrap/Col";
+import useGames from "../hooks/useGames";
+import _ from "lodash";
 
 function Games() {
   const history = useHistory({});
-  const [games, setGames] = useState([]);
-  const [pagination, setPagination] = useState({});
-
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-
-  const loadGames = async () => {
-    const response = await GamesService.getPaged(page, pageSize);
-    const data = response.data;
-    setPagination(JSON.parse(response.headers["x-pagination"]));
-    setGames(data);
-  };
-
-  useEffect(() => {
-    loadGames();
-  }, [page, pageSize]);
-
-  const handleDelete = async (game) => {
-    const previousState = games;
-    setGames(games.filter((m) => m.id !== game.id));
-
-    try {
-      await GamesService.remove(game.id);
-    } catch (ex) {
-      if (!ex.response || ex.response.status !== 404) {
-        toast.error("Sorry something has gone wrong");
-        setGames(previousState);
-        return;
-      }
-
-      toast("Looks like that game had already been deleted....");
-    }
-
-    if (games.length <= 1 && pagination.page > 1) {
-      setPage(page - 1);
-    }
-
-    loadGames();
-  };
+  const {
+    games,
+    isLoading,
+    pagination,
+    handleSetPageSize,
+    handleDeleteGame,
+    setPage,
+  } = useGames();
 
   const handleEdit = (game) => {
     return history.push(`/game/${game.id}`);
   };
 
-  const handleSetPageSize = (newPageSize) => {
-    var newTotalPages = Math.ceil(pagination.totalCount / newPageSize);
-    if (newTotalPages < pagination.page) {
-      setPage(newTotalPages);
-    }
-
-    setPageSize(newPageSize);
-  };
+  if (isLoading) {
+    return (
+      <Fragment>
+        <h2>Games Rating App</h2>
+        <p>Loading...</p>
+      </Fragment>
+    );
+  }
 
   if (!games || games.length < 1) {
     return (
@@ -106,7 +75,7 @@ function Games() {
                     Edit
                   </Button>
                   <Button
-                    onClick={() => handleDelete(x)}
+                    onClick={() => handleDeleteGame(x)}
                     variant="outline-danger"
                     size="sm"
                   >
