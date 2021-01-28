@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import Games from "./components/games";
+import Games from "./components/games/games";
 import GameForm from "./components/gameForm";
 import NotFound from "./components/notFound";
 import Navbar from "./components/navBar";
