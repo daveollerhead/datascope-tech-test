@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import PaginationComponent from "../common/pagination";
-
 import useGames from "../../hooks/useGames";
 import Loader from "react-loader-spinner";
 import GamesHeader from "./gamesHeader";

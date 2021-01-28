@@ -1,24 +1,13 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "react-bootstrap/Form";
-import InputForm from "./common/form";
-import GamesService from "../services/gamesService";
-import { toast } from "react-toastify";
-import Moment from "moment";
+import useGame from "./../hooks/useGame";
+import useValidation from "./../hooks/useValidation";
+import Input from "./common/input";
+import Button from "react-bootstrap/Button";
 
-class GameForm extends InputForm {
-  state = {
-    data: {
-      name: "",
-      description: "",
-      releasedAt: "",
-      rating: 0,
-    },
-    errors: {},
-    isEdit: false,
-  };
-
-  schema = {
+const GameForm = (props) => {
+  const schema = {
     id: Joi.number(),
     name: Joi.string().required().max(100).label("Name"),
     description: Joi.string().required().max(500).label("Description"),
@@ -26,90 +15,88 @@ class GameForm extends InputForm {
     rating: Joi.number().required().max(10).min(0).label("Rating"),
   };
 
-  async componentDidMount() {
-    const id = this.props.match.params.id;
-    if (!id) {
-      return;
-    }
-    try {
-      const { data } = await GamesService.get(id);
-      this.setState({
-        data: {
-          ...data,
-          releasedAt: Moment(data.releasedAt).toISOString().substr(0, 10),
-        },
-      });
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404) {
-        toast.error("Looks like no game exists with the given ID");
-        return;
-      }
+  const { errors, validateSchema, validateProperty } = useValidation(schema);
+  const { data, setData, saveGame } = useGame(props.match.params.id);
 
-      toast.error("Sorry something has gone wrong");
-    }
+  const handleChange = ({ target }) => {
+    validateProperty(target);
 
-    this.setState({ isEdit: true });
-  }
-
-  doSubmit = async () => {
-    try {
-      const { data } = this.state;
-
-      if (this.state.isEdit) {
-        await GamesService.put(this.state.data.id, {
-          ...data,
-          rating: Number(data.rating),
-        });
-      } else {
-        await GamesService.post({ ...data, rating: Number(data.rating) });
-      }
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        toast.error(
-          "Looks like I missed some validation on the client side, awkward..."
-        );
-        return;
-      }
-
-      toast.error("Sorry something has gone wrong");
-      return;
-    }
-
-    return this.props.history.push("/games");
+    const newData = { ...data };
+    newData[target.name] = target.value;
+    setData(newData);
   };
 
-  render() {
+  const handleDisabled = () => {
+    if (Object.keys(errors).length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("hello");
+
+    const errorz = validateSchema(data);
+    console.log("errors", errorz);
+    if (errorz) {
+      return;
+    }
+
+    await saveGame();
+
+    return props.history.push("/games");
+  };
+
+  const renderInput = (name, label, placeholder, type = "text") => {
     return (
-      <div className="col-xl-4 col-lg-6">
-        <h2>Rate a new Game</h2>
-        <Form>
-          {this.renderInput("name", "Name", "Enter name for game to rate")}
-
-          {this.renderInput(
-            "description",
-            "Description",
-            "Enter description of game to rate"
-          )}
-
-          {this.renderInput(
-            "releasedAt",
-            "Release Date",
-            "Enter release date of game to rate",
-            "date"
-          )}
-
-          {this.renderInput(
-            "rating",
-            "Rating",
-            "Enter rating for game",
-            "number"
-          )}
-
-          {this.renderButton("Submit")}
-        </Form>
-      </div>
+      <Input
+        name={name}
+        type={type}
+        label={label}
+        placeholder={placeholder}
+        value={data[name]}
+        onChange={(e) => handleChange(e)}
+        error={errors[name]}
+      />
     );
-  }
-}
+  };
+
+  return (
+    <div className="col-xl-4 col-lg-6">
+      <h2>Rate a new Game</h2>
+      <Form>
+        {renderInput("name", "Name", "Enter name for game to rate")}
+
+        {renderInput(
+          "description",
+          "Description",
+          "Enter description of game to rate"
+        )}
+
+        {renderInput(
+          "releasedAt",
+          "Release Date",
+          "Enter release date of game to rate",
+          "date"
+        )}
+
+        {renderInput("rating", "Rating", "Enter rating for game", "number")}
+
+        <Button
+          block
+          variant="primary"
+          type="submit"
+          onClick={handleSubmit}
+          disabled={handleDisabled()}
+        >
+          Submit
+        </Button>
+      </Form>
+    </div>
+  );
+};
 
 export default GameForm;
