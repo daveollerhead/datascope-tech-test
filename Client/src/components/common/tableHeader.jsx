@@ -6,7 +6,7 @@ const TableHeader = (props) => {
     <thead>
       <tr>
         {columns.map((x) => (
-          <th>{x.label}</th>
+          <th key={x.path}>{x.label}</th>
         ))}
       </tr>
     </thead>

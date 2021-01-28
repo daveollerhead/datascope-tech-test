@@ -37,11 +37,7 @@ const GameForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("hello");
-
-    const errorz = validateSchema(data);
-    console.log("errors", errorz);
-    if (errorz) {
+    if (validateSchema(data)) {
       return;
     }
 

@@ -23,14 +23,13 @@ const useGame = (id) => {
         const game = response.data;
         setData({
           ...game,
-          releasedAt: Moment(data.releasedAt).toISOString().substr(0, 10),
+          releasedAt: Moment(game.releasedAt).toISOString().substr(0, 10),
         });
       } catch (ex) {
         if (ex.response && ex.response.status === 404) {
           toast.error("Looks like no game exists with the given ID");
           return;
         }
-
         toast.error("Sorry something has gone wrong");
       }
 
@@ -38,7 +37,7 @@ const useGame = (id) => {
     };
 
     loadData();
-  });
+  }, []);
 
   const saveGame = async () => {
     try {
