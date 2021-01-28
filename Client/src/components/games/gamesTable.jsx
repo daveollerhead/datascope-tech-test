@@ -4,55 +4,55 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Moment from "moment";
+import TableHeader from "../common/tableHeader";
+import TableBody from "./../common/tableBody";
 
 const GamesTable = (props) => {
   const history = useHistory({});
-
   const { games, onDelete } = props;
+
   const handleEdit = (game) => {
     return history.push(`/game/${game.id}`);
   };
+
+  const columns = [
+    { label: "ID", path: "id" },
+    { label: "Title", path: "name" },
+    { label: "Description", path: "description" },
+    {
+      label: "Released",
+      path: "releasedAt",
+      content: (x) => Moment(x.releasedAt).format("DD/MM/yyyy"),
+    },
+    { label: "Rating", path: "rating" },
+    {
+      label: "",
+      key: "button-group",
+      content: (x) => (
+        <ButtonGroup>
+          <Button
+            onClick={() => handleEdit(x)}
+            variant="outline-primary"
+            size="sm"
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => onDelete(x)}
+            variant="outline-danger"
+            size="sm"
+          >
+            Delete
+          </Button>
+        </ButtonGroup>
+      ),
+    },
+  ];
+
   return (
     <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Released</th>
-          <th>Rating</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {games.map((x) => (
-          <tr key={x.id}>
-            <td>{x.id}</td>
-            <td>{x.name}</td>
-            <td>{x.description}</td>
-            <td>{Moment(x.releasedAt).format("DD/MM/yyyy")}</td>
-            <td>{x.rating}</td>
-            <td>
-              <ButtonGroup>
-                <Button
-                  onClick={() => handleEdit(x)}
-                  variant="outline-primary"
-                  size="sm"
-                >
-                  Edit
-                </Button>
-                <Button
-                  onClick={() => onDelete(x)}
-                  variant="outline-danger"
-                  size="sm"
-                >
-                  Delete
-                </Button>
-              </ButtonGroup>
-            </td>
-          </tr>
-        ))}
-      </tbody>
+      <TableHeader columns={columns} />
+      <TableBody data={games} columns={columns} />
     </Table>
   );
 };
