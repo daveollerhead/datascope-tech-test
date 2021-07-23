@@ -12,6 +12,7 @@ namespace DatascopeTest.Controllers
     [Route("[controller]")]
     public class GamesController : ControllerBase
     {
+        // adding a comment...
         private readonly IMediator _mediator;
 
         public GamesController(IMediator mediator)
