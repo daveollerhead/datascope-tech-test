@@ -18,10 +18,10 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ./API/DatascopeTest.sln
+      run: dotnet restore API/DatascopeTest.sln
     - name: Build API
-      run: dotnet build ./API/DatascopeTest/DatascopeTest.csproj --no-restore
+      run: dotnet build API/DatascopeTest/DatascopeTest.csproj --no-restore
     - name: Build Tests
-      run: dotnet build ./API/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-restore
+      run: dotnet build API/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-restore
     - name: Test
-      run: dotnet test ./API/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-build --verbosity normal
+      run: dotnet test API/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-build --verbosity normal
