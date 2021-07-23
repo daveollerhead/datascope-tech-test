@@ -20,8 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./Api/DatascopeTest.sln
     - name: Build API
-      run: dotnet build API/DatascopeTest/DatascopeTest.csproj --no-restore
-    - name: Build Tests
-      run: dotnet build API/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-restore
+      run: dotnet build ./Api/DatascopeTest.sln --no-restore    
     - name: Test
-      run: dotnet test API/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-build --verbosity normal
+      run: dotnet test ./Api/DatascopeTest.Tests/DatascopeTest.Tests.csproj --no-build --verbosity normal
