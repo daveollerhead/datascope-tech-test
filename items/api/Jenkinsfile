@@ -20,7 +20,13 @@ pipeline {
 
     stage('Build') {
       steps {
-        bat "dotnet build ${workspace}\\Api\\DatascopeTest.sln"
+        bat "dotnet build Api/DatascopeTest.sln"
+      }
+    }
+
+    stage('Test') {
+      steps {
+        bat "dotnet test Api/DatascopeTest.sln"
       }
     }
   }
