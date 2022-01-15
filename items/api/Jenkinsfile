@@ -24,9 +24,21 @@ pipeline {
       }
     }
 
-    stage('Test') {
+    stage('Unit Tests') {
       steps {
-        bat "dotnet test Api/DatascopeTest.sln"
+        bat "dotnet test API/DatascopeTest.Tests/DatascopeTest.Tests.csproj"
+      }
+    }
+
+    stage('Print ConStr') {
+      steps {        
+        echo "connection string ${env.ConnectionStrings__DatascopeTestIntegrationTests}"
+      }
+    }
+
+    stage('Integration Test') {
+      steps {
+        bat "dotnet test API/DatascopeTests.IntegrationTests/DatascopeTests.IntegrationTests.csproj"
       }
     }
   }

@@ -45,12 +45,6 @@ namespace DatascopeTest.Tests.Commands
 
             _mockRepository.Verify(x => x.Add(It.IsAny<Game>()), Times.Once);
             _mockRepository.Verify(x => x.SaveChanges(), Times.Once);
-        }
-
-        [Fact]
-        public void Fail()
-        {
-            Assert.False(true);
-        }
+        } 
     }
 }

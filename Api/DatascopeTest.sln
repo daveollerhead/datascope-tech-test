@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatascopeTest", "DatascopeTest\DatascopeTest.csproj", "{257F3AC3-A535-4082-9453-578C00913EF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatascopeTest.Tests", "DatascopeTest.Tests\DatascopeTest.Tests.csproj", "{B54FC202-3F8B-4379-A983-6331B7CD6B7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatascopeTest.Tests", "DatascopeTest.Tests\DatascopeTest.Tests.csproj", "{B54FC202-3F8B-4379-A983-6331B7CD6B7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatascopeTests.IntegrationTests", "DatascopeTests.IntegrationTests\DatascopeTests.IntegrationTests.csproj", "{F28CF558-0A28-47ED-B530-28082229A926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B54FC202-3F8B-4379-A983-6331B7CD6B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B54FC202-3F8B-4379-A983-6331B7CD6B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B54FC202-3F8B-4379-A983-6331B7CD6B7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F28CF558-0A28-47ED-B530-28082229A926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F28CF558-0A28-47ED-B530-28082229A926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F28CF558-0A28-47ED-B530-28082229A926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F28CF558-0A28-47ED-B530-28082229A926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

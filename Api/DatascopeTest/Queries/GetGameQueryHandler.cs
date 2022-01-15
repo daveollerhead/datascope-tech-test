@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DatascopeTest.Data.Repositories;
 using DatascopeTest.DTOs;
+using DatascopeTest.Exceptions;
 using DatascopeTest.Models;
 using MediatR;
 
@@ -22,6 +23,9 @@ namespace DatascopeTest.Queries
         public async Task<GetGameDto> Handle(GetGameQuery request, CancellationToken cancellationToken)
         {
             var game = await _repository.Get(request.Id);
+            if (game == null)
+                throw new NoEntityExistsException(nameof(Game), request.Id);
+
             return _mapper.Map<GetGameDto>(game);
         }
     }

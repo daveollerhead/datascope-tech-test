@@ -29,7 +29,7 @@ namespace DatascopeTest
         {
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration["DbConnectionString"]));
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatascopeTest")));
 
             services.AddScoped<IGenericRepository<Game>, GenericRepository<Game>>();
             services.AddScoped<IGamesRepository, GamesRepository>();
