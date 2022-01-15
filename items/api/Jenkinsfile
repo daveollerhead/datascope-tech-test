@@ -1,0 +1,27 @@
+pipeline {
+  agent any
+
+  triggers {
+    pollSCM('* * * * *')
+  }
+
+  stages {
+    // stage ('Clean workspace') {
+    //   steps {
+    //     cleanWs()
+    //   }
+    // } 
+
+    stage('Restore packages') {
+      steps {
+        bat "dotnet restore Api/DatascopeTest.sln"
+      }
+    }
+
+    stage('Build') {
+      steps {
+        bat "dotnet build ${workspace}\\Api\\DatascopeTest.sln"
+      }
+    }
+  }
+}
