@@ -15,5 +15,4 @@ services:
     image: datascopetest-integrationtests:latest
     environment:
       - ConnectionStrings__DatascopeTestIntegrationTests=${ConnectionStrings__DatascopeTestIntegrationTests}
-    build: .
     
