@@ -30,15 +30,17 @@ pipeline {
       }
     }
 
-    stage('Print ConStr') {
-      steps {        
-        echo "connection string ${env.ConnectionStrings__DatascopeTestIntegrationTests}"
+    stage('Build Docker Image') {
+      steps {
+        dir('Api'){
+          bat "docker build -f test.Dockerfile -t datascopetest-integrationtests ."
+        }        
       }
     }
 
     stage('Integration Test') {
       steps {
-        bat "dotnet test API/DatascopeTests.IntegrationTests/DatascopeTests.IntegrationTests.csproj"
+        bat "docker-compose -f items/api/docker-compose.yml up --abort-on-container-exit"
       }
     }
   }

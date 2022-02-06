@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  sql: 
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    # networks:
+    #   - dstest-int
+
+  integration: 
+    depends_on:
+      - sql
+    image: datascopetest-integrationtests:latest
+    environment:
+      - ConnectionStrings__DatascopeTestIntegrationTests=${ConnectionStrings__DatascopeTestIntegrationTests}
+    build: .
+    # networks:
+    #   - dstest-int
+
+# networks:
+#   dstest-int:
+#     driver: bridge

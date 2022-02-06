@@ -54,6 +54,8 @@ namespace DatascopeTests.IntegrationTests
                 var config = scopedServices.GetRequiredService<IConfiguration>();
                 var connectionString = config.GetConnectionString("DatascopeTestIntegrationTests");
 
+                Console.WriteLine($"Connection String={connectionString}");
+
                 // DI
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
@@ -84,7 +86,6 @@ namespace DatascopeTests.IntegrationTests
             _factory = new CustomWebApplicationFactory<Startup>();
             _httpClient = _factory.CreateClient(new WebApplicationFactoryClientOptions());
         }
-
 
         [Test]
         public async Task Get_ValidGameIdPassed_ReturnsOk()
