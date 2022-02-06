@@ -32,7 +32,7 @@ pipeline {
 
     stage('Integration Test') {
       steps {
-        dir('Api'){
+        dir('Api') {
           bat "docker build -f test.Dockerfile -t datascopetest-integrationtests ."
         }        
         bat "docker-compose -f items/api/docker-compose.yml up --abort-on-container-exit"
@@ -42,15 +42,16 @@ pipeline {
 
     stage('Build Docker Image') {
       steps {
-        dir('Api'){          
+        dir('Api') {          
           bat "docker build -f api.Dockerfile -t datascopetest ."
         }    
       }
     }
 
-    stage('Run EE Tests')
+    stage('Run EE Tests') {
       steps {
         bat "docker-compose -f items/api/postman-collections/docker-compose.postman.yml up --abort-on-container-exit"
       }
+    }
   }
 }
