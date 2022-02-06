@@ -12,14 +12,9 @@ pipeline {
     //   }
     // } 
 
-    stage('Restore packages') {
-      steps {
-        bat "dotnet restore Api/DatascopeTest.sln"
-      }
-    }
-
     stage('Build') {
       steps {
+        bat "dotnet restore Api/DatascopeTest.sln"
         bat "dotnet build Api/DatascopeTest.sln"
       }
     }
@@ -31,7 +26,7 @@ pipeline {
     }    
 
     stage('Integration Test') {
-      steps {
+      steps {        
         dir('Api') {
           bat "docker build -f test.Dockerfile -t datascopetest-integrationtests ."
         }        

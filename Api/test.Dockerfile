@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["DatascopeTests.IntegrationTests/DatascopeTests.IntegrationTests.csproj", "DatascopeTests.IntegrationTests/"]
 COPY ["DatascopeTest/DatascopeTest.csproj", "DatascopeTest/"]
-RUN dotnet restore "DatascopeTests.IntegrationTests/DatascopeTests.IntegrationTests.csproj" --disable-parallel
+RUN dotnet restore "DatascopeTests.IntegrationTests/DatascopeTests.IntegrationTests.csproj"
 
 COPY . .
 WORKDIR "/src/DatascopeTests.IntegrationTests"
