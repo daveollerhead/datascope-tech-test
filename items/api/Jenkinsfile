@@ -28,20 +28,29 @@ pipeline {
       steps {
         bat "dotnet test API/DatascopeTest.Tests/DatascopeTest.Tests.csproj"
       }
-    }
+    }    
 
-    stage('Build Docker Image') {
+    stage('Integration Test') {
       steps {
         dir('Api'){
           bat "docker build -f test.Dockerfile -t datascopetest-integrationtests ."
         }        
+        bat "docker-compose -f items/api/docker-compose.yml up --abort-on-container-exit"
+        bat "docker-compose -f items/api/docker-compose.yml down"
       }
     }
 
-    stage('Integration Test') {
+    stage('Build Docker Image') {
       steps {
-        bat "docker-compose -f items/api/docker-compose.yml up --abort-on-container-exit"
+        dir('Api'){          
+          bat "docker build -f api.Dockerfile -t datascopetest ."
+        }    
       }
     }
+
+    stage('Run EE Tests')
+      steps {
+        bat "docker-compose -f items/api/postman-collections/docker-compose.postman.yml up --abort-on-container-exit"
+      }
   }
 }

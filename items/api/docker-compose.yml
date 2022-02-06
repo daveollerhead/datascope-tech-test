@@ -7,9 +7,7 @@ services:
       SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"
     ports:
-      - "1433:1433"
-    # networks:
-    #   - dstest-int
+      - "1433:1433"    
 
   integration: 
     depends_on:
@@ -18,9 +16,4 @@ services:
     environment:
       - ConnectionStrings__DatascopeTestIntegrationTests=${ConnectionStrings__DatascopeTestIntegrationTests}
     build: .
-    # networks:
-    #   - dstest-int
-
-# networks:
-#   dstest-int:
-#     driver: bridge
+    
