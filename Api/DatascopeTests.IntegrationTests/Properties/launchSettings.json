@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DatascopeTests.IntegrationTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

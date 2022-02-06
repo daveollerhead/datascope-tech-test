@@ -29,6 +29,7 @@ namespace DatascopeTests.IntegrationTests
             return new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
+                .AddUserSecrets<Startup>()
                 .Build();
         }
     }
@@ -42,7 +43,8 @@ namespace DatascopeTests.IntegrationTests
             builder.ConfigureAppConfiguration((context, config) =>
             {
                 config.AddJsonFile("appsettings.json")
-                    .AddEnvironmentVariables();
+                    .AddEnvironmentVariables()
+                    .AddUserSecrets<Startup>();
             });
 
             builder.ConfigureServices(services =>
