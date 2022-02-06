@@ -45,7 +45,7 @@ pipeline {
 
     stage('Run EE Tests') {
       steps {
-        bat "docker-compose -f items/api/postman-collections/docker-compose.postman.yml up --abort-on-container-exit"
+        bat "docker-compose -f items/api/docker-compose.postman.yml up --abort-on-container-exit"
       }
     }
   }
