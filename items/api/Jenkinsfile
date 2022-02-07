@@ -30,8 +30,12 @@ pipeline {
         dir('Api') {
           bat "docker build -f test.Dockerfile -t datascopetest-integrationtests ."
         }        
-        bat "docker-compose -f items/api/docker-compose.yml up --abort-on-container-exit"
-        bat "docker-compose -f items/api/docker-compose.yml down"
+        bat "docker-compose -f items/api/docker-compose.yml up --abort-on-container-exit"        
+      }
+      post {
+        always {
+          bat "docker-compose -f items/api/docker-compose.yml down"
+        }
       }
     }
 
@@ -45,9 +49,13 @@ pipeline {
 
     stage('Run EE Tests') {
       steps {
-        bat "docker-compose -f items/api/docker-compose.postman.yml up --abort-on-container-exit"
-        bat "docker-compose -f items/api/docker-compose.postman.yml down"
+        bat "docker-compose -f items/api/docker-compose.postman.yml up --abort-on-container-exit"        
       }
+      post {
+        always {
+          bat "docker-compose -f items/api/docker-compose.postman.yml down"
+        }
+      }      
     }
   }
 }
