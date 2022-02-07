@@ -10,7 +10,7 @@ services:
   games-service:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionStrings__DatascopeTest=Server=sql;database=DataScopeTest;user id=sa;password=${saPassword};TrustServerCertificate=true
+      - ConnectionStrings__DatascopeTest=Server=sql;database=DataScopeTest;user id=sa;password=${saPassword}
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dockertest.pfx

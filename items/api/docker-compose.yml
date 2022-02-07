@@ -5,7 +5,6 @@ services:
     image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
       MSSQL_SA_PASSWORD: ${saPassword}
-      # SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"    
 
   integration: 

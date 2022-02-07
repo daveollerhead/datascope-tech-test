@@ -21,6 +21,10 @@ namespace DatascopeTest
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureAppConfiguration(builder =>
+                {
+                    builder.AddEnvironmentVariables().AddUserSecrets<Startup>();
                 });
     }
 }
