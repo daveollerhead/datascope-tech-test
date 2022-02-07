@@ -4,16 +4,14 @@ services:
   sql: 
     image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
-      MSSQL_SA_PASSWORD: "Your_password123"
+      MSSQL_SA_PASSWORD: ${saPassword}
       # SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"    
+      ACCEPT_EULA: "Y"    
 
   integration: 
     depends_on:
       - sql
     image: datascopetest-integrationtests:latest
     environment:
-      - ConnectionStrings__DatascopeTestIntegrationTests=${ConnectionStrings__DatascopeTestIntegrationTests}
+      - ConnectionStrings__DatascopeTestIntegrationTests=Server=sql;database=DataScopeTest.IntegrationTests;user id=sa;password=${saPassword}
     
