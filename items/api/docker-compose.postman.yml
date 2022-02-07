@@ -18,7 +18,7 @@ services:
       - sql
     image: datascopetest    
     volumes:
-      - ${USERPROFILE}/.aspnet/https:/https/        
+      - C:\Users\daveo\.aspnet\https:/https/        
     
   postman:
     image: postman/newman_alpine33
