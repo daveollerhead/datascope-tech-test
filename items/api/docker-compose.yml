@@ -12,5 +12,5 @@ services:
       - sql
     image: datascopetest-integrationtests:latest
     environment:
-      - ConnectionStrings__DatascopeTestIntegrationTests=Server=sql;database=DataScopeTest.IntegrationTests;user id=sa;password=${saPassword}
+      - ConnectionStrings__DatascopeTestIntegrationTests=Server=sql;database=DataScopeTest.IntegrationTests;user id=sa;password=${saPassword};TrustServerCertificate=True
     
