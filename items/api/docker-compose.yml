@@ -7,10 +7,12 @@ services:
       MSSQL_SA_PASSWORD: Your_password123!
       ACCEPT_EULA: "Y"    
 
-  integration: 
+  integration:
+    build: . 
     depends_on:
       - sql
     image: datascopetest-integrationtests:latest
     environment:
       - ConnectionStrings__DatascopeTestIntegrationTests=Server=sql;database=DataScopeTest.IntegrationTests;user id=sa;password=Your_password123!;TrustServerCertificate=True
+    command: ["./wait-for-it.sh", "db", "-t", "120", "--", "dotnet", "test"]
     
