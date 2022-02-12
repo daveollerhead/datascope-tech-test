@@ -24,7 +24,7 @@ services:
     image: postman/newman_alpine33
     command: run Games.postman_collection.json
      -e Local.postman_environment.json
-     --delay-request 5000
+     --delay-request 10000
      --insecure
     depends_on:
       - sql
