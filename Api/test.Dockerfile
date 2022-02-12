@@ -10,4 +10,4 @@ RUN dotnet restore "DatascopeTests.IntegrationTests/DatascopeTests.IntegrationTe
 COPY . .
 WORKDIR "/src/DatascopeTests.IntegrationTests"
 # RUN dotnet build "DatascopeTests.IntegrationTests.csproj"
-CMD sh -c "sleep 10 && dotnet test"
+ENTRYPOINT ["dotnet", "test"]
