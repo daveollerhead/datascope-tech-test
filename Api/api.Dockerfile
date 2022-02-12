@@ -17,4 +17,4 @@ RUN dotnet publish "DatascopeTest.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DatascopeTest.dll"]
+CMD ["dotnet", "DatascopeTest.dll"]
