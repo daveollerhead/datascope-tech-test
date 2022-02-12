@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +30,13 @@ namespace DatascopeTest
         {
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DatascopeTest")));
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(
+                Configuration.GetConnectionString("DatascopeTest"),
+                sqlServerOptionsAction: sql => sql.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30), 
+                    errorNumbersToAdd: null)
+                ));
 
             services.AddScoped<IGenericRepository<Game>, GenericRepository<Game>>();
             services.AddScoped<IGamesRepository, GamesRepository>();

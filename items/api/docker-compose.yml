@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
       MSSQL_SA_PASSWORD: Your_password123!
-      ACCEPT_EULA: "Y"    
+      ACCEPT_EULA: "Y"
 
   integration:
     build: . 
@@ -14,5 +14,4 @@ services:
     image: datascopetest-integrationtests:latest
     environment:
       - ConnectionStrings__DatascopeTestIntegrationTests=Server=sql;database=DataScopeTest.IntegrationTests;user id=sa;password=Your_password123!;TrustServerCertificate=True
-    command: ["./wait-for-it.sh", "db", "-t", "120", "--", "dotnet", "test"]
     
