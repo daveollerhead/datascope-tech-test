@@ -65,7 +65,13 @@ namespace DatascopeTests.IntegrationTests
 
                 services.Remove(descriptor);
 
-                services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
+                services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(
+                    connectionString,
+                    sql => sql.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null)
+                ));
 
                 // DB
                 // var db = scopedServices.GetRequiredService<AppDbContext>();
